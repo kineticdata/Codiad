@@ -33,7 +33,7 @@
         // Create tarball
         $filename = explode("/",$_GET['path']);
         //$filename = array_pop($filename) . "-" . date('Y.m.d') . ".tar.gz";
-        $filename = array_pop($filename) . "-" . date('Y.m.d');
+        $filename = array_pop($filename);
         $targetPath = DATA . '/';
         $dir = WORKSPACE . '/' . $_GET['path'];
         if(!is_dir($dir)){
@@ -43,13 +43,7 @@
         //////////////////////////////////////////////////////////////////
         // Check system() command and a non windows OS
         //////////////////////////////////////////////////////////////////
-        if(isAvailable('system') && stripos(PHP_OS, 'win') === false){
-          # Execute the tar command and save file
-          $filename .= '.tar.gz';
-
-          system("tar -pczf ".escapeshellarg($targetPath.$filename)." -C ".escapeshellarg(WORKSPACE)." ".escapeshellarg($_GET['path']));
-          $download_file = $targetPath.$filename;
-        }elseif(extension_loaded('zip')){ //Check if zip-Extension is availiable
+        if(extension_loaded('zip')){ //Check if zip-Extension is availiable
           //build zipfile
           require_once 'class.dirzip.php';
 
